@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Penguin</title>
+        <meta charset="utf-8">
+        <style>
+            .heading {
+                background-color: Tan;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .paragraph {
+                background-color: peachpuff;
+                color: olive;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 42px;
+                margin-top: 8px;
+                margin-bottom: 10px;
+                margin-left: 12px;
+                margin-right: 12px;
+
+                padding-top: 6px;
+                padding-bottom: 6px;
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+        </div>
+        <script src="react/react.js"></script>
+        <script src="react/react-dom.js"></script>
+        <script src="react/babel.js"></script>
+        <script type="text/babel">
+            ReactDOM.render(
+                <div class="heading">
+                    <p class="paragraph"> This is a test</p>
+                    <p class="paragraph"> Hi my name is Mark</p>
+                    <p class="paragraph"> Oh hi Mark</p>
+                </div>,
+                document.getElementById( 'app' ),
+            );
+        </script>
+    </body>
+</html>
