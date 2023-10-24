@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Custom Components</title>
+    </head>
+    <body>
+        <div id="app">
+            <span>Custom thing goes Here</span>
+        </div>
+        <script src="react/react.js"></script>
+        <script src="react/react-dom.js"></script>
+        <script>
+            const MyComponent = function () {
+                return React.createElement('span', null, 'I am so custom');
+            };
+            // ReactDOM.render(MyComponent(), document.getElementById('app'));
+            const root = ReactDOM.createRoot(document.getElementById('app'));
+            root.render(MyComponent());
+        </script>
+    </body>
+</html>
