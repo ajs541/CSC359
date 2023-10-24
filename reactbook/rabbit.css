@@ -16,9 +16,6 @@ body {
 header {
   font-size: 28px;
 }
-input, textarea {
-  font: inherit;
-}
 
 main {
   margin: 1em;
