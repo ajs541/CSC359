@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html>
-    <header>
+    <head>
         <Title>The Black Knight Guts</Title>
         <meta charset="utf-8" />
         <link rel="stylesheet" type="text/css" href="guts.css" />
-    </header>
+    </head>
     <body>
-        
+        <div id="app">
+            <h1 id="heading-one">
+                Guts: The Black Knight.
+            </h1>
+            <main id="main">
+                <p>A story about an angry man with a very rough life.</p>
+                <p>Testing out paragraphs</p>
+            </main>
+        </div>
+        <script src="react/react.js"></script>
+        <script src="react/react-dom.js"></script>
+        <script src="react/babel.js"></script>
+        <script type="text/babel">
+            ReactDOM.render(
+                document.getElementById('app'),
+            );
+        </script>
     </body>
 </html>

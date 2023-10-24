@@ -1,3 +1,16 @@
 html {
     background: black;
 }
+
+main {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16;
+    color: white;
+    text-rendering: optimizeSpeed;
+}
+
+h1 {
+    font-size: 28;
+    color: white;
+}
+
