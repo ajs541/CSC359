@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Custom Components</title>
+        <title>Custom UI</title>
     </head>
     <body>
         <div id="app">
-            <span>Custom thing goes Here</span>
+            <span>
+                "Custom thing goes "
+                <em>HERE</em>
+            </span>
         </div>
         <script src="react/react.js"></script>
         <script src="react/react-dom.js"></script>
-        <script>
-            const MyComponent = function () {
-                return React.createElement('span', null, 'I am so custom');
-            };
-            // ReactDOM.render(MyComponent(), document.getElementById('app'));
-            const root = ReactDOM.createRoot(document.getElementById('app'));
-            root.render(MyComponent());
+        <script src="react/babel.js"></script>
+        <script type="text/babel">
+            class MyComponent extends React.Component {
+                render() {
+                    return (
+                        <span>
+                            Custom thing goes <em>(this.props.name)</em>
+                        </span>
+                    );
+                }
+            }
+            ReactDOM.render(
+                <MyComponent name="HERE" />,
+                document.getElementById('app'),
+            );
         </script>
     </body>
 </html>
