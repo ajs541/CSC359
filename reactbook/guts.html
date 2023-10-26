@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <Title>The Black Knight Guts</Title>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" type="text/css" href="guts.css" />
-    </head>
-    <body>
-        <div id="app">
-            <h1 id="heading-one">
-                Guts: The Black Knight.
-            </h1>
-            <main id="main">
-                <p>A story about an angry man with a very rough life.</p>
-                <p>Testing out paragraphs</p>
-            </main>
-        </div>
-        <script src="react/react.js"></script>
-        <script src="react/react-dom.js"></script>
-        <script src="react/babel.js"></script>
-        <script type="text/babel">
-            const gallery = [
-                {src: 'https://i.pinimg.com/originals/04/cb/17/04cb17c2f905e24152189fe8d49d45d1.jpg'},
-                {src: 'https://i.pinimg.com/originals/5d/63/8b/5d638bec8ad8f4b96ea73c2d4b21957c.jpg'},
-                {src: 'https://i.pinimg.com/originals/78/55/28/785528e8a290591a835abfe06a2508b6.jpg'},
-                {src: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/6f00508a-a9d1-4321-92ec-4ec73cad492b/db9dug1-5c8af881-407a-4ac1-9605-c165746fbb9d.png/v1/fill/w_1024,h_729,q_80,strp/guts___berserk__colored__by_nerozation_db9dug1-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzI5IiwicGF0aCI6IlwvZlwvNmYwMDUwOGEtYTlkMS00MzIxLTkyZWMtNGVjNzNjYWQ0OTJiXC9kYjlkdWcxLTVjOGFmODgxLTQwN2EtNGFjMS05NjA1LWMxNjU3NDZmYmI5ZC5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.nTs_vVBYQmx6WZJ7vyvDD1TYW5oV9iNII6lSDyFyIkk'},
-            ];
-            const app1 = () => {
 
-                return (
-                    <div>
-                        {gallery.map((imgSrc, index) => (<img src={imgSrc.src} key={index} alt="ahhhh"/>))}
-                    </div>
-                )
-            }
-            //ReactDOM.render(
-            //    document.getElementById('app'),
-            //);
-        </script>
-    </body>
+<head>
+    <Title>The Black Knight Guts</Title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="guts.css" />
+</head>
+
+<body>
+    <div id="app">
+    </div>
+    <script src="react/react.js"></script>
+    <script src="react/react-dom.js"></script>
+    <script src="react/babel.js"></script>
+    <script type="text/babel">
+        const gallery = [
+            'https://i.pinimg.com/originals/04/cb/17/04cb17c2f905e24152189fe8d49d45d1.jpg',
+            'https://i.pinimg.com/originals/5d/63/8b/5d638bec8ad8f4b96ea73c2d4b21957c.jpg',
+            'https://i.pinimg.com/originals/78/55/28/785528e8a290591a835abfe06a2508b6.jpg',
+            'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/6f00508a-a9d1-4321-92ec-4ec73cad492b/db9dug1-5c8af881-407a-4ac1-9605-c165746fbb9d.png/v1/fill/w_1024,h_729,q_80,strp/guts___berserk__colored__by_nerozation_db9dug1-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzI5IiwicGF0aCI6IlwvZlwvNmYwMDUwOGEtYTlkMS00MzIxLTkyZWMtNGVjNzNjYWQ0OTJiXC9kYjlkdWcxLTVjOGFmODgxLTQwN2EtNGFjMS05NjA1LWMxNjU3NDZmYmI5ZC5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.nTs_vVBYQmx6WZJ7vyvDD1TYW5oV9iNII6lSDyFyIkk',
+        ];
+        function YourComponent() {
+            return (
+                <div className="galleryArea">
+                    {gallery.map((img) => (
+                        <img key={img} src={img} alt={img} className="gallery" />
+                    ))}
+                </div>
+            );
+        };
+        ReactDOM.render(
+            <div>
+                <h1>The Black Knight, Guts</h1>
+                <p>He was cursed from birth, and has never had an easy life.</p>
+                <YourComponent />
+            </div>,
+            document.getElementById('app'),
+        );
+    </script>
+</body>
+
 </html>

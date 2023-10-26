@@ -2,7 +2,7 @@ html {
     background: black;
 }
 
-main {
+body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 16;
     color: white;
@@ -11,6 +11,5 @@ main {
 
 h1 {
     font-size: 28;
-    color: white;
 }
 
