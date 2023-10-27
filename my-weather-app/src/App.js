@@ -2,7 +2,7 @@ import './App.css';
 import React, { useEffect, useState } from "react";
 export default function App() {
 
-  const [lat, setLat] = useSate([]); //State for Latitude
+  const [lat, setLat] = useState([]); //State for Latitude
   const [long, setLong] = useState([]); //State for Longitude
 
   //useEffect loads functions when application loads up and is reloaded.
