@@ -23,7 +23,7 @@ var room = "gallery";
 
 // A suspect can be either of - Mr. Parkes, Ms. Van Cleve, Mrs. Sparr, or Mr. Kalehoff
 // Test your code by giving matching as well as unmatching names of the suspect
-var suspect = "Mr. Parkes"; 
+var suspect = "Ms. Van Cleve"; 
 
 /* ****************************************** */
 
