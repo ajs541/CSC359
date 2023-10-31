@@ -118,7 +118,7 @@ function FruitGroup() {
 }
 
 const breads = ["Toast", "English Muffin", "Bagel", "Croissant"];
-const eggs = ["scrambled", "sunny side up", "over eary", "boiled"];
+const eggs = ["scrambled", "sunny side up", "over easy", "boiled"];
 const fruits = ["orange", "grapefruit", "grape", "apple juice"];
 
 export default function App() {
