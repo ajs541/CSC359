@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+
 const theme = {
   blue: {
     default: "#3f51b5",
@@ -117,6 +118,27 @@ function FruitGroup() {
   );
 }
 
+function TabGroup({list}) {
+  const [active, setActive] = useState(list[0]);
+  return (
+    <>
+      <div>
+        {list.map((item) => (
+          <Tab
+            key={item}
+            active={active === item}
+            onClick={() => setActive(item)}
+          >
+            {item}
+          </Tab>
+        ))}
+      </div>
+      <p>test code: {active} </p>
+    </>
+  );
+}
+
+
 const breads = ["Toast", "English Muffin", "Bagel", "Croissant"];
 const eggs = ["scrambled", "sunny side up", "over easy", "boiled"];
 const fruits = ["orange", "grapefruit", "grape", "apple juice"];
@@ -128,6 +150,7 @@ export default function App() {
       <BreadGroup />
       <EggGroup />
       <FruitGroup />
+      <TabGroup list={breads} />
     </>
   );
 }
