@@ -1,48 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
-
-const theme = {
-  blue: {
-    default: "#3f51b5",
-    hover: "#283593"
-  },
-  pink: {
-    default: "#e91e63",
-    hover: "#ad1457"
-  }
-};
-
-const Button = styled.button`
-  background-color: ${(props) => theme[props.theme].default};
-  color: white;
-  padding: 5px 15px;
-  border-radius: 5px;
-  outline: 0;
-  text-transform: uppercase;
-  margin: 10px 0px;
-  cursor: pointer;
-  box-shadow: 0px 2px 2px lightgray;
-  transition: ease background-color 250ms;
-  &:hover {
-    background-color: ${(props) => theme[props.theme].hover};
-  }
-  &:disabled {
-    cursor: default;
-    opacity: 0.7;
-  }
-`;
-
-Button.defaultProps = {
-  theme: "blue"
-};
-
+import "./App.css";
 
 const Tab = styled.button`
   padding: 10px 30px;
   cursor: pointer;
   opacity: 0.6;
-  background: white;
+  font-size: 25px;
   border: 0;
   outline: 0;
   border-bottom: 2px solid transparent;
@@ -55,102 +19,58 @@ const Tab = styled.button`
   `}
 `;
 
-function BreadGroup() {
-  const [active, setActive] = useState(breads[0]);
-  return (
-    <>
-      <div>
-        {breads.map((bread) => (
-          <Tab
-            key={bread}
-            active={active === bread}
-            onClick={() => setActive(bread)}
-          >
-            {bread}
-          </Tab>
-        ))}
-      </div>
-      <p />
-      <p> Your bread selection: {active} </p>
-    </>
-  );
-}
+function MenuGroup({ selected, setSelected, items }) {
+  const handleItemClick = (index) => {
+    const updatedSelection = items.map((item, i) => (i === index ? item : ''));
+    setSelected(updatedSelection);
+  };
 
-function EggGroup() {
-  const [active, setActive] = useState(eggs[0]);
   return (
     <>
       <div>
-        {eggs.map((bread) => (
-          <Tab
-            key={bread}
-            active={active === bread}
-            onClick={() => setActive(bread)}
-          >
-            {bread}
-          </Tab>
-        ))}
-      </div>
-      <p />
-      <p> How you want your eggs: {active} </p>
-    </>
-  );
-}
-
-function FruitGroup() {
-  const [active, setActive] = useState(fruits[0]);
-  return (
-    <>
-      <div>
-        {fruits.map((fruit) => (
-          <Tab
-            key={fruit}
-            active={active === fruit}
-            onClick={() => setActive(fruit)}
-          >
-            {fruit}
-          </Tab>
-        ))}
-      </div>
-      <p />
-      <p> Your fruit selection: {active} </p>
-    </>
-  );
-}
-
-function TabGroup({list}) {
-  const [active, setActive] = useState(list[0]);
-  return (
-    <>
-      <div>
-        {list.map((item) => (
+        {items.map((item, index) => (
           <Tab
             key={item}
-            active={active === item}
-            onClick={() => setActive(item)}
+            active={selected[index] === items[index]}
+            onClick={() => handleItemClick(index)}
           >
             {item}
           </Tab>
         ))}
       </div>
-      <p>test code: {active} </p>
     </>
   );
 }
 
 
-const breads = ["Toast", "English Muffin", "Bagel", "Croissant"];
-const eggs = ["scrambled", "sunny side up", "over easy", "boiled"];
-const fruits = ["orange", "grapefruit", "grape", "apple juice"];
-
 export default function App() {
+  const [selectedBreads, setSelectedBreads] = useState(["", "", ""]); //sets the useState of each element
+  const [selectedEggs, setSelectedEggs] = useState(["", "", ""]);
+  const [selectedFruits, setSelectedFruits] = useState(["", "", ""]);
+
+  const breads = ["Toast", "English Muffin", "Bagel", "Croissant"];  //food arrays
+  const eggs = ["scrambled", "sunny side up", "over easy", "boiled"];
+  const fruits = ["orange", "grapefruit", "grape", "apple juice"];
+
   return (
-    <>
+    <body>
       <h1>Breakfast Options:</h1>
-      <BreadGroup />
-      <EggGroup />
-      <FruitGroup />
-      <TabGroup list={breads} />
-    </>
+      <MenuGroup
+        selected={selectedBreads}
+        setSelected={setSelectedBreads}
+        items={breads}
+      />
+      <MenuGroup
+        selected={selectedEggs}
+        setSelected={setSelectedEggs}
+        items={eggs}
+      />
+      <MenuGroup
+        selected={selectedFruits}
+        setSelected={setSelectedFruits}
+        items={fruits}
+      />
+      <p>Your order: {selectedBreads.filter(item => item !== '').join(", ")}, {selectedEggs.filter(item => item !== '').join(", ")}, and {selectedFruits.filter(item => item !== '').join(", ")}</p>
+    </body>
   );
 }

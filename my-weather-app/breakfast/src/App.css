@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: blue;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +35,16 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+body {
+  background-color: goldenrod;
+  font-family: "Comic Sans MS", "Comic Sans", serif;
+}
+
+h1 {
+  font-size: 50px;
+}
+p {
+  font-size: 25px;
 }
