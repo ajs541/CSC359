@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import "./App.css";
 
+//new and improved version.  Eliminates the need for having a different function for each array.
+
 const Tab = styled.button`
   padding: 10px 30px;   
   cursor: pointer;
@@ -16,15 +18,15 @@ const Tab = styled.button`
     `
     border-bottom: 2px solid black;
     opacity: 1;
-  `}
-`;
+  `} 
+`; //button function.  This is the base button element and used throughout the other functions.
 
 function MenuGroup({ selected, setSelected, items }) {
   const handleItemClick = (index) => {
     const updatedSelection = items.map((item, i) => (i === index ? item : '')); //this is how I change the elements on the fly of the order sentence.
     setSelected(updatedSelection);  //by setting the update within the MenuGroup, it allows the selection to update in real time as buttons are changed and pressed.
   };
-
+  
   return (
     <>
       <div>
@@ -56,7 +58,7 @@ export default function App() {
     <body>
       <h1>Breakfast Options:</h1>
       <MenuGroup
-        selected={selectedBreads}
+        selected={selectedBreads} //Three seperate grouops of buttons, each using different arrays but using the same function to execute.
         setSelected={setSelectedBreads}
         items={breads}
       />
@@ -70,7 +72,8 @@ export default function App() {
         setSelected={setSelectedFruits}
         items={fruits}
       />
-      <p>Your order: {selectedBreads.filter(item => item !== '').join(", ")}, {selectedEggs.filter(item => item !== '').join(", ")}, and {selectedFruits.filter(item => item !== '').join(", ")}</p>
-    </body>
+      <p>Your order: {selectedBreads.filter(item => item !== '').join(", ")},
+        {selectedEggs.filter(item => item !== '').join(", ")}, and {selectedFruits.filter(item => item !== '').join(", ")}</p>
+    </body> //Current order is updated as buttons are active or not active.
   );
 }

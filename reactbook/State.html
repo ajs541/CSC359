@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+    <head>
+        <title>Hello React</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="03.table.css" />
+    </head>
+    <body>
+        <div id="app">
+            <!-- my app renders here-->
+        </div>
+        <script src="react/react.js"></script>
+        <script src="react/react-dom.js"></script>
+        <script src="react/babel.js"></script>
+        <script type="text/babel">
+            const useState = React.useState;
+
+            function State() {
+                function makeState(stateName, yearOfAdmission) {
+                    return ({
+                        stateName: stateName,
+                        yearOfAdmission: yearOfAdmission,
+                    })
+                }
+            }
+        </script>
+    </body>
