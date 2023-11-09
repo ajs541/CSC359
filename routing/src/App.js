@@ -8,14 +8,14 @@ export default function App() {
         <nav>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
+            <li><Link to="/primates">Primates</Link></li>
             <li><Link to="/contact">Contact</Link></li>
           </ul>
         </nav>
         <Routes>
           <Route index element={<Home />} />
           <Route path="/*" element={<Main />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/primates" element={<Primates />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -35,15 +35,15 @@ const Main = () => (
 
 const Home = () => (
   <Fragment>
-    <h1>Home</h1>
-    <p>Welcome to the Home section</p>
+    <h1>Aaron's Zoo</h1>
+    <p>Welcome, select an animal to get started.</p>
   </Fragment>
 );
 
-const About = () => (
+const Primates = () => (
   <Fragment>
-    <h1>About</h1>
-    <p>About section content goes here</p>
+    <h1>Primates</h1>
+    <p>Primates section content goes here</p>
   </Fragment>
 );
 
