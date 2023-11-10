@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { BrowserRouter as Router, Route, Link, Routes, Outlet } from "react-router-dom";
 import styled from "styled-components";
+import './App.css';
 
 const Tab = styled.button`
   padding: 10px 30px;   
@@ -17,7 +18,7 @@ const Tab = styled.button`
     border-bottom: 2px solid black;
     opacity: 1;
   `} 
-`; //button function.  This is the base button element and used throughout the other functions.
+`; //button function.  This is the base button element and used in MenuGroup
 
 function MenuGroup({ selected, setSelected, items }) {
   const handleItemClick = (index) => {
@@ -46,26 +47,28 @@ export default function App() {
   const [selectedBirdsImage, setSelectedBirdsImage] = useState("");
   */
   return (
-    <Router>
-      <main>
-        <nav>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/Primates">Primates</Link></li>
-            <li><Link to="/Reptiles">Reptiles</Link></li>
-            <li><Link to="/Birds">Birds</Link></li>
-          </ul>
-        </nav>
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="/*" element={<Main />} />
-          <Route path="/Primates" element={<Primates />} />
-          <Route path="/Reptiles" element={<Reptiles />} />
-          <Route path="/Birds" element={<Birds />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
-    </Router>
+    <body>
+      <Router>
+        <main>
+          <nav>
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/Primates">Primates</Link></li>
+              <li><Link to="/Reptiles">Reptiles</Link></li>
+              <li><Link to="/Birds">Birds</Link></li>
+            </ul>
+          </nav>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/*" element={<Main />} />
+            <Route path="/Primates" element={<Primates />} />
+            <Route path="/Reptiles" element={<Reptiles />} />
+            <Route path="/Birds" element={<Birds />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+      </Router>
+    </body>
   );
 }
 
@@ -100,9 +103,9 @@ const Primates = () => {
           "https://outforia.com/wp-content/uploads/2021/03/Types_Monkeys_East_Javan_Langur_0321.jpg",
           "https://1.bp.blogspot.com/-Dt4zQZIq_U4/TvfeRMwptnI/AAAAAAAAEOg/hp_0XRDmQCY/s1600/monkey_5.jpg",
           "https://4.bp.blogspot.com/-vA4SiaM3rk8/TvfdbwcVGZI/AAAAAAAAENk/EQEbBrNEPqc/s1600/monkey_1.jpg"
-        ]} // Add your image URLs for primates
+        ]}
       />
-      <img src={selectedPrimatesImage} alt="Primates Image" />
+      <img src={selectedPrimatesImage} alt="Primates" />
     </Fragment>
   );
 }
@@ -122,7 +125,7 @@ const Reptiles = () => {
           "https://www.thoughtco.com/thmb/WJqyU9lE1sGRxvNzZ0owGnJfDZ0=/1274x0/filters:no_upscale():max_bytes(150000):strip_icc()/shutterstock_52214-56a006fe5f9b58eba4ae8c7b.jpg",
           "https://images.internetstores.de/products/889817/01/98baed/Crocs_Classic_Clogs_army_green[1920x1920].jpg?forceSize=false&forceAspectRatio=true&useTrim=true"
         ]} />
-      <img src={selectedReptilesImage} alt="Reptiles Image" />
+      <img src={selectedReptilesImage} alt="Reptiles" />
     </Fragment>
   );
 }
@@ -142,7 +145,7 @@ const Birds = () => {
           "https://images7.alphacoders.com/759/759593.jpg",
           "https://res.cloudinary.com/teepublic/image/private/s--FDkhbc8Y--/t_Preview/b_rgb:484849,c_limit,f_auto,h_630,q_90,w_630/v1584563970/production/designs/8545411_0.jpg"
         ]} />
-      <img src={selectedBirdsImage} alt="Birds Image" />
+      <img src={selectedBirdsImage} alt="Birds" />
     </Fragment>
   );
 }
