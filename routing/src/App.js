@@ -23,7 +23,7 @@ function MenuGroup({ selected, setSelected, items }) {
   const handleItemClick = (index) => {
     setSelected(items[index]); // Update the selected image URL directly
   };
-  
+
   return (
     <div>
       {items.map((item, index) => (
@@ -40,12 +40,11 @@ function MenuGroup({ selected, setSelected, items }) {
 }
 
 export default function App() {
+  /*
   const [selectedPrimatesImage, setSelectedPrimatesImage] = useState("");
   const [selectedReptilesImage, setSelectedReptilesImage] = useState("");
   const [selectedBirdsImage, setSelectedBirdsImage] = useState("");
-
-  const numberOptions = ["1", "2", "3"]; // Number options for the MenuGroup
-
+  */
   return (
     <Router>
       <main>
@@ -108,19 +107,45 @@ const Primates = () => {
   );
 }
 
-const Reptiles = () => (
-  <Fragment>
-    <h1>Reptiles</h1>
-    <p>Reptiles section content goes here</p>
-  </Fragment>
-);
+const Reptiles = () => {
+  const [selectedReptilesImage, setSelectedReptilesImage] = useState("");
 
-const Birds = () => (
-  <Fragment>
-    <h1>Birds</h1>
-    <p>Birds section content goes here</p>
-  </Fragment>
-);
+  return (
+    <Fragment>
+      <h1>Reptiles</h1>
+      <p>Cold blooded, has scales.  Uses eggs for offspring.  Come in many colors but usually green.</p>
+      <MenuGroup
+        selected={selectedReptilesImage}
+        setSelected={setSelectedReptilesImage}
+        items={[
+          "https://wallup.net/wp-content/uploads/2016/03/12/321711-animals-beach-lizards-reptile.jpg",
+          "https://www.thoughtco.com/thmb/WJqyU9lE1sGRxvNzZ0owGnJfDZ0=/1274x0/filters:no_upscale():max_bytes(150000):strip_icc()/shutterstock_52214-56a006fe5f9b58eba4ae8c7b.jpg",
+          "https://images.internetstores.de/products/889817/01/98baed/Crocs_Classic_Clogs_army_green[1920x1920].jpg?forceSize=false&forceAspectRatio=true&useTrim=true"
+        ]} />
+      <img src={selectedReptilesImage} alt="Reptiles Image" />
+    </Fragment>
+  );
+}
+
+const Birds = () => {
+  const [selectedBirdsImage, setSelectedBirdsImage] = useState("");
+
+  return (
+    <Fragment>
+      <h1>Birds</h1>
+      <p>Warm blooded, usually with feathers.  Most fly but a few don't.</p>
+      <MenuGroup
+        selected={selectedBirdsImage}
+        setSelected={setSelectedBirdsImage}
+        items={[
+          "https://2.bp.blogspot.com/-hK3WJtcEkUI/TphTufCdz0I/AAAAAAAACRs/KcGjipK7qyM/s1600/lovebirds_beautifulbirds_picturespool_19.jpg",
+          "https://images7.alphacoders.com/759/759593.jpg",
+          "https://res.cloudinary.com/teepublic/image/private/s--FDkhbc8Y--/t_Preview/b_rgb:484849,c_limit,f_auto,h_630,q_90,w_630/v1584563970/production/designs/8545411_0.jpg"
+        ]} />
+      <img src={selectedBirdsImage} alt="Birds Image" />
+    </Fragment>
+  );
+}
 
 const NotFound = () => (
   <h1>404: Page not found</h1>
