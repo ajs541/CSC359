@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import { BrowserRouter as Router, Route, Link, Routes, Outlet } from "react-router-dom";
 import styled from "styled-components";
 import './App.css';
+import image from "./crab.png";
 
 const Tab = styled.button`
   padding: 10px 30px;   
@@ -47,7 +48,7 @@ export default function App() {
   const [selectedBirdsImage, setSelectedBirdsImage] = useState("");
   */
   return (
-    <body>
+    <body style={{ backgroundImage:`url(${image})`}}>
       <Router>
         <main>
           <nav>

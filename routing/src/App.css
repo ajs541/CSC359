@@ -1,14 +1,18 @@
 body{
     background-color: lightgreen;
-    font-size: 16;
+    font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+    
+    font-size: 16px;
+    text-align:center;
+    background-blend-mode:lighten;
 }
 
 h1{
-    font-size: 28;
+    font-size: 36px;
 }
 
-nav{
-    font-size: 40;
+li{
+    text-align: left;
 }
 
 img{
