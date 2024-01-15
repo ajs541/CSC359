@@ -57,6 +57,7 @@ export default function App() {
               <li><Link to="/Primates">Primates</Link></li>
               <li><Link to="/Reptiles">Reptiles</Link></li>
               <li><Link to="/Birds">Birds</Link></li>
+              <li><Link to="/Crabs">Crabs</Link></li>
             </ul>
           </nav>
           <Routes>
@@ -65,6 +66,7 @@ export default function App() {
             <Route path="/Primates" element={<Primates />} />
             <Route path="/Reptiles" element={<Reptiles />} />
             <Route path="/Birds" element={<Birds />} />
+            <Route path="/Crabs" element={<Crabs />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
@@ -149,6 +151,26 @@ const Birds = () => {
       <img src={selectedBirdsImage} alt="Birds" />
     </Fragment>
   );
+}
+
+const Crabs = () => {
+  const [selectedCrabsImage, setSelectedCrabsImage] = useState("");
+
+  return (
+    <Fragment>
+      <h1>Crabs</h1>
+      <p>Superior life form, all should strive to RETURN TO CRAB!</p>
+      <MenuGroup
+        selected={selectedCrabsImage}
+        setSelected={setSelectedCrabsImage}
+        items={[
+          "https://nayturr.com/wp-content/uploads/2020/07/types-of-crab-july022020-min.jpg",
+          "https://nayturr.com/wp-content/uploads/2020/07/dungeness-crab-july022020-min.jpg",
+          "https://images.newscientist.com/wp-content/uploads/2019/09/10162554/drb3pn.jpg"
+        ]} />
+        <img src={selectedCrabsImage} alt="Crabs" />
+    </Fragment>
+  )
 }
 
 const NotFound = () => (
