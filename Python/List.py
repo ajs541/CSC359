@@ -38,7 +38,7 @@ class List:
     
     def append(self, element):
         if self.__count == self.__capacity:
-            self._rezie(self.__capactiy*2)
+            self._resize(self.__capacity*2)
         self.__arr[self.__count]=element
         self.__count += 1
 
