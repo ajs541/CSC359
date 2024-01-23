@@ -1,10 +1,11 @@
+# Aaron Standefer (with help from Mark Smith)
 from BaseMap import BaseMap
 
 class UnsortedMap(BaseMap):
     
     def __init__(self):
         
-        self.__items = []
+        self.__items: list[BaseMap.Item]= []
         
     def __len__(self):
         
@@ -61,10 +62,28 @@ class UnsortedMap(BaseMap):
     
     def __next__(self):
         
-        if self.__index >= len(self.__items):
-            
+        if self.__index >= len(self.__items):  
             raise StopIteration()
-        
-        key = self.__items[self.__index]
+        key = self.__items[self.__index].key
         self.__index += 1
         return key
+    
+    def __str__(self):
+        arrayString = "{"
+        i=0
+        for pair in self.__items:
+            arrayString += str(pair.key) + ":" + str(pair.value)
+            i += 1
+            if i == len(self.__items):
+                arrayString += "}"
+            else:
+                arrayString += ", "
+        return arrayString
+
+
+if __name__ == "__main__":
+    a = UnsortedMap()
+    a[1] = "hi"
+    a[2] = "it cold"
+    a[3] = "it ain't snowing anymore"
+    print(a)

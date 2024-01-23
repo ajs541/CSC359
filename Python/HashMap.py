@@ -1,3 +1,4 @@
+# Aaron Standefer
 from BaseMap import BaseMap
 
 class HashMap(BaseMap):
@@ -5,11 +6,11 @@ class HashMap(BaseMap):
     def __init__(self, capacity=None):
         
         super().__init__()
-        self._bucketArray = [None] * self.__capacity
         if capacity == None:
             self.__capacity=11
         else:
             self.__capacity=capacity
+        self._bucketArray = [None] * self.__capacity
         self._count=0
         self.__prime=16937
         self.__scale=277
@@ -35,4 +36,7 @@ class HashMap(BaseMap):
         index = self.__hashFunction(key)
         self._bucket_delitem(key, index)
         
-    
+    def __getitem__(self, key):
+        
+        index = self.__hashFunction(key)
+        return self._bucket_getitem(key, index)

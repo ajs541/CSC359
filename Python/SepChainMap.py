@@ -1,3 +1,4 @@
+# Aaron Standefer (with help from Mark Smith)
 from HashMap import HashMap
 from UnsortedMap import UnsortedMap
 
@@ -28,3 +29,29 @@ class SepChainMap(HashMap):
             raise KeyError()
         del self._bucketArray[index][key]
         self._count=self._count-1
+        
+    def __iter__(self):
+        for bucket in self._bucketArray:
+            if bucket is not None:
+                for key in bucket:
+                    yield key
+    
+    def __str__(self):
+        arrayString = "{"
+        i=0
+        for key in self:
+            value = self[key]
+            arrayString += str(key) + ":" + str(value)
+            i += 1
+            if i == len(self):
+                arrayString += "}"
+            else:
+                arrayString += ", "
+        return arrayString
+
+if __name__ == "__main__":
+    a = SepChainMap()
+    a[1] = "hi"
+    a[2] = "it cold"
+    a[3] = "it ain't snowing anymore"
+    print(a)
