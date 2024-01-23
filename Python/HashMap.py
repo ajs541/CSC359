@@ -4,7 +4,8 @@ class HashMap(BaseMap):
     
     def __init__(self, capacity=None):
         
-        self._bucket = [None] * self.__capacity
+        super().__init__()
+        self._bucketArray = [None] * self.__capacity
         if capacity == None:
             self.__capacity=11
         else:

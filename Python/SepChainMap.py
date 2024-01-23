@@ -7,7 +7,7 @@ class SepChainMap(HashMap):
         
         super().__init__(capacity)
         
-    def _bucket_getitem(self, key, value):
+    def _bucket_getitem(self, key, index):
         
         if self._bucketArray[index]==None:
             raise KeyError()
