@@ -13,7 +13,7 @@ class SepChainMap(HashMap):
         if self._bucketArray[index]==None:
             raise KeyError()
         return self._bucketArray[index][key]
-    
+    # makes an unsortedmap inside of hashmap
     def _bucket_setitem(self, key, value, index):
         
         if self._bucketArray[index]==None:

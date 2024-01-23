@@ -6,11 +6,11 @@ class UnsortedMap(BaseMap):
     def __init__(self):
         
         self.__items: list[BaseMap.Item]= []
-        
+    # length of Map    
     def __len__(self):
         
         return len(self.__items)
-    
+    # M[k]
     def __getitem__(self,key):
         
         for item in self.__items:
@@ -20,7 +20,7 @@ class UnsortedMap(BaseMap):
                 return item.value
             
         raise KeyError("Key does not exist")
-    
+    # M[k] = v
     def __setitem__(self,key,value):
         
         found = False
@@ -36,7 +36,7 @@ class UnsortedMap(BaseMap):
             
             item=self.Item(key,value)
             self.__items.append(item)
-            
+    #del M[k]        
     def __delitem__(self,key):
         
         index = None

@@ -19,7 +19,7 @@ class HashMap(BaseMap):
     def __len__(self):
         
         return self._count
-    
+    # hash equation
     def __hashFunction(self, key):
         
         h=hash(key)

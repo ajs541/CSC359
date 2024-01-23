@@ -1,7 +1,8 @@
+#Aaron Standefer
 from _collections_abc import MutableMapping
 
 class BaseMap(MutableMapping):
-    
+    # This class sets up so =, <. !=. and > are set to work with map functions
     class Item:
         
         def __init__(self, k, v):
