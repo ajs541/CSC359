@@ -7,7 +7,7 @@ class SepChainMap(HashMap):
     def __init__(self, capacity=None):
         
         super().__init__(capacity)
-        
+    # The _bucket_(items) are to ensure the HashMap functions calling to them run properly 
     def _bucket_getitem(self, key, index):
         
         if self._bucketArray[index]==None:
@@ -48,7 +48,7 @@ class SepChainMap(HashMap):
             else:
                 arrayString += ", "
         return arrayString
-
+# tester stuff
 if __name__ == "__main__":
     a = SepChainMap()
     a[1] = "hi"

@@ -67,7 +67,7 @@ class UnsortedMap(BaseMap):
         key = self.__items[self.__index].key
         self.__index += 1
         return key
-    
+    # to String
     def __str__(self):
         arrayString = "{"
         i=0
@@ -80,7 +80,7 @@ class UnsortedMap(BaseMap):
                 arrayString += ", "
         return arrayString
 
-
+#tester stuff
 if __name__ == "__main__":
     a = UnsortedMap()
     a[1] = "hi"

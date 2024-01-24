@@ -15,7 +15,7 @@ class HashMap(BaseMap):
         self.__prime=16937
         self.__scale=277
         self.__offset=1033
-    
+    # length
     def __len__(self):
         
         return self._count
