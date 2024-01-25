@@ -38,23 +38,15 @@ class UnsortedMap(BaseMap):
             self.__items.append(item)
     #del M[k]        
     def __delitem__(self,key):
-        
         index = None
-        
         for i in range(len(self.__items)):
-            
             if key==self.__items[i].key:
-                
                 index=i
-            
         if index != None:
-            
             self.__items.pop(index)
-            
         else:
-            
             raise KeyError()
-        
+
     def __iter__(self):
         
         self.__index=0
@@ -87,3 +79,4 @@ if __name__ == "__main__":
     a[2] = "it cold"
     a[3] = "it ain't snowing anymore"
     print(a)
+    
