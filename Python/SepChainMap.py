@@ -41,7 +41,7 @@ class SepChainMap(HashMap):
         i=0
         for key in self:
             value = self[key]
-            arrayString += str(key) + ":" + str(value)
+            arrayString += str(key) + ": " + str(value)
             i += 1
             if i == len(self):
                 arrayString += "}"

@@ -64,7 +64,7 @@ class UnsortedMap(BaseMap):
         arrayString = "{"
         i=0
         for pair in self.__items:
-            arrayString += str(pair.key) + ":" + str(pair.value)
+            arrayString += str(pair.key) + ": " + str(pair.value)
             i += 1
             if i == len(self.__items):
                 arrayString += "}"
