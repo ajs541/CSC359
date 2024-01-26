@@ -18,7 +18,7 @@ class Queue:
     def dequeue(self):
         
         if self.isEmpty():
-            raise Error()
+            raise Exception()
         temp = self.__arr[self.__front]
         self.__front = (self.__front + 1) % len(self.__arr)
         if self.isEmpty():
@@ -43,12 +43,24 @@ class Queue:
     
     def __str__(self):
         
+        return str(list(self))
     
     def __resize(self, capacity):
+        newArray = [None]*capacity
+        for i, element in enumerate(self):
+            newArray[i] = element
+        self.__arr = newArray
+        self.__front = 0
+        self.__rear = i
+        
         
     
     def __iter__(self):
-        
+        pointer = self.__front
+        while pointer != self.__rear:
+            yield self.__arr[pointer]
+            pointer=(pointer+1) % len(self.__arr)
+        yield self.__arr[pointer]
         
         
     
@@ -58,4 +70,4 @@ if __name__ == "__main__":
     q.enqueue(7)
     q.enqueue(6)
     #print(q.__isFull())
-    print(q.isEmpty())
+    print(q)
