@@ -15,8 +15,19 @@ while not finish:
     else:
         i = 0
 """
+def isBalanced(parentString):
+    balance = 0
+    if parentString == "":
+        raise SyntaxError
+    for i in parentString:
+        if i == "(":
+            balance += 1
+        elif balance <= 0:
+            return False
+        else:
+            balance -= 1
+    return balance==0
 
-D = {}
-D[0] = 5
-D[1] = 62
-print(D)
+exampleString = ")()"
+print(isBalanced(exampleString))
+    

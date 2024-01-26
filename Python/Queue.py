@@ -41,6 +41,17 @@ class Queue:
             return 0
         return ((self.__rear + len(self.__arr) - self.__front) % len(self.__arr)) + 1
     
+    def __str__(self):
+        
+    
+    def __resize(self, capacity):
+        
+    
+    def __iter__(self):
+        
+        
+        
+    
 if __name__ == "__main__":
     q = Queue()
     q.enqueue(5)
