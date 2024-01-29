@@ -2,7 +2,7 @@
 
 class Node:
     
-    def __init__(self, next, data):
+    def __init__(self, data, next=None):
         
         self.next = next
         self.data = data
@@ -122,3 +122,9 @@ class SingleLinkedList:
             yield node.data
             node = node.next
         yield node.data
+
+if __name__ == "__main__":
+    list = SingleLinkedList()
+    list.addFirst(55)
+    list.addLast(34)
+    print(list.removeFirst())
