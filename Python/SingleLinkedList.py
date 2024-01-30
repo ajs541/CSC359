@@ -1,5 +1,5 @@
 # Aaron Standefer (with help from Mark Smith)
-
+# Put Node Class in same file since the class is only accessed here
 class Node:
     
     def __init__(self, data, next=None):
@@ -8,12 +8,12 @@ class Node:
         self.data = data
 
 class SingleLinkedList:
-    
+    # setting head and tail to point to None initially, count at 0
     def __init__(self):
         self.__head = None
         self.__tail = None
         self.__count = 0
-    
+    # Checks if any entries in list, if so put element in entry one, otherwise initializes list with one entry
     def addFirst(self, element):
         newNode = Node(element)
         if self.__count == 0:
@@ -22,7 +22,7 @@ class SingleLinkedList:
             newNode.next = self.__head
         self.__head = newNode
         self.__count += 1
-    
+    # Same as above but adding to the end of the list
     def addLast(self, element):
         newNode = Node(element)
         if self.__count == 0:
@@ -31,7 +31,7 @@ class SingleLinkedList:
             self.__tail.next = newNode
         self.__tail = newNode
         self.__count += 1
-    
+    # Takes the element and puts it at the position
     def add(self, pos, element):
         if pos == None or pos < 0 or pos > self.__count:
             raise Exception("Position of bounds")
@@ -47,7 +47,7 @@ class SingleLinkedList:
             newNode.next = temp.next
             temp.next = newNode
             self.__count += 1
-        
+    # Removes element and sets the element after it to head, raises error if list is empty
     def removeFirst(self):
         if self.__count == 0:
             raise Exception("Cannot remove element from empty list")
@@ -57,7 +57,7 @@ class SingleLinkedList:
         self.__head = self.__head.next
         self.__count -= 1
         return element
-    
+    # like above but with tail, raises error if empty
     def removeLast(self):
         if self.__count == 0:
             raise Exception("Cannot remove element from empty list")
@@ -71,7 +71,7 @@ class SingleLinkedList:
             self.__tail = newTail
         self.__count -= 1
         return element
-    
+    # removes the element at position, raises error if empty
     def remove(self, pos):
         if self.__count == 0:
             raise Exception("Cannot remove element from empty list")
@@ -92,13 +92,12 @@ class SingleLinkedList:
             newPos.next = newPos.next.next
             self.__count -= 1
             return element
-            
-            
+    # returns element at position if the position exists in list
     def get(self, pos):
         if self.__count == 0:
             raise Exception("List is empty")
         return self.__at(pos).data
-    
+    # boolean for if list contains element
     def __contains__(self, data):
         
         current = self.__head
@@ -107,7 +106,7 @@ class SingleLinkedList:
                 return True
             current = current.next
         return False
-        
+    # repeatable function for going thru list to a set index, returning node at said index
     def __at(self, index):
         if index == None or index < 0 or index >= self.__count:
             raise Exception("Index not in bounds of list")
