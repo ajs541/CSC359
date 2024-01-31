@@ -15,7 +15,7 @@ while not finish:
     else:
         i = 0
 """
-
+import math
 def moveZeroesLeft(list):
     zeroList = []
     otherList = []
@@ -54,8 +54,45 @@ def rightRightTriangle(int):
         print(stars)
         count -= 1
         
+def isPalindrome(string):
+    stringStack = []
+    n = len(string)
+    if 1==((-1)**n):
+        isEven = True
+    else:
+        isEven = False
+    if isEven == True:
+        for i in range(n/2):
+            stringStack.append(string[i])
+        for j in range(n/2, n):
+            if string[j] == stringStack.peek():
+                stringStack.pop()
+                if j == n:
+                    return True
+            else:
+                return False
+    else:
+        for i in range(math.floor(n/2)):
+            stringStack.append(string[i])
+        for j in range(math.floor(n/2)+2, n):
+            if string[j] == stringStack.peek():
+                stringStack.pop()
+                if j == n:
+                    return True
+            else:
+                return False
+    
+def intSum(list, k):
+    for i in range(len(list)):
+        for j in range(i+1, len(list)):
+            if list[i] + list[j] == k:
+                print([list[i], list[j]])
+                return True
+    return False
+
+
 
 if __name__ in "__main__":
-    L = [3, 0, 4, 6, 0, 3]
-    leftRightTriangle(4)
-    rightRightTriangle(4)
+    ints = [4, 7, 2, 0, 3]
+    sum = 5
+    print(intSum(ints, sum))

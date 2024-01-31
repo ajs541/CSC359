@@ -14,11 +14,11 @@ class Stack:
         
     def pop(self):
         if len(self.__arr)<=0:
-            raise UnderflowError("Stack is too small")
+            raise Exception("Stack is too small")
         return self.__arr.pop()
     
     def peek(self):
         if len(self.__arr)<=0:
-            raise UnderflowError("Stack is too small")
+            raise Exception("Stack is too small")
         return self.__arr[-1]
     
