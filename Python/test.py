@@ -90,7 +90,11 @@ def intSum(list, k):
                 return True
     return False
 
-
+def doNotDoThis():
+    k = 1028
+    while k != 0:
+        k = k*k**10
+        print(k)
 
 if __name__ in "__main__":
     ints = [4, 7, 2, 0, 3]
