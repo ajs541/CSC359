@@ -1,5 +1,6 @@
-
-
+# Aaron Standefer (with help from Mark Smith)
+import math
+from UnsortedMap import UnsortedMap
 def mergeSortLists(list1, list2):
     newList = []
     count = 0
@@ -36,8 +37,28 @@ def mergeSortLists(list1, list2):
         newList.append(list2[j])                
     return newList
     
+def getPrimes(lst):
+    primeList = []
+    for i in range(len(lst)):
+        isPrime = True
+        if lst[i] == 1:
+            isPrime = False
+        if lst[i] > 1:
+            for j in range(2, lst[i]):
+                if (lst[i] % j) == 0:
+                    isPrime = False
+                    break
+        if isPrime:
+            primeList.append(lst[i])  
+    if primeList == []:
+        print("No primes")
+        return None   
+    print(primeList)
+                    
 
 if __name__ == "__main__":
-    l2 = [3, 8, 9, 10, 15, 70]
+    l2 = [1, 3, 8, 7, 10, 13, 70, 87]
     l1 = [3, 9, 11, 14, 15, 25]
+    l3 = [4, 6, 10]
     print(mergeSortLists(l1,l2))
+    getPrimes(l2)
