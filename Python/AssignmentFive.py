@@ -1,6 +1,12 @@
 # Aaron Standefer (with help from Mark Smith)
 import math
 from UnsortedMap import UnsortedMap
+#for question one, dictionary is very mutable,
+#and sorted("string") => ['s', 't', 'r', 'i', 'n', 'g']
+def anagramDetect(lst):
+    letters = UnsortedMap()
+    
+
 def mergeSortLists(list1, list2):
     newList = []
     count = 0
