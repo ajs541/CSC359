@@ -12,7 +12,6 @@ class UnsortedMap(BaseMap):
         return len(self.__items)
     # M[k]
     def __getitem__(self,key):
-        
         for item in self.__items:
             
             if item.key==key:

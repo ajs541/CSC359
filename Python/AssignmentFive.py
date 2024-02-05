@@ -36,7 +36,16 @@ def mergeSortLists(list1, list2):
     if newList.__contains__(list2[j]) == False and list2[j] > list1[i]:
         newList.append(list2[j])                
     return newList
-    
+
+def intOccur(lst):
+    occur = UnsortedMap()
+    for i in range(len(lst)):
+        if occur.get(lst[i]) != None:
+            occur[lst[i]] = occur[lst[i]] + 1
+        else:
+            occur[lst[i]] = 1
+    print(occur)
+
 def getPrimes(lst):
     primeList = []
     for i in range(len(lst)):
@@ -62,3 +71,5 @@ if __name__ == "__main__":
     l3 = [4, 6, 10]
     print(mergeSortLists(l1,l2))
     getPrimes(l2)
+    l4 = [4, 6, 4, 10, 33, 10]
+    intOccur(l4)
