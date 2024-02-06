@@ -2,8 +2,8 @@ class Stack:
     
     def __init__ (self, cap = None):
         self.__arr = []
-        if cap <= 0:
-            self.__capacity = None
+        if cap is None or cap <= 0:
+            self.__capacity = 1000
         else:
             self.__capacity = cap
     

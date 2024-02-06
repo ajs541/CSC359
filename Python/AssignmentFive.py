@@ -1,11 +1,18 @@
 # Aaron Standefer (with help from Mark Smith)
 import math
 from UnsortedMap import UnsortedMap
+from Stack import Stack
 #for question one, dictionary is very mutable,
 #and sorted("string") => ['s', 't', 'r', 'i', 'n', 'g']
 def anagramDetect(lst):
     letters = UnsortedMap()
-    
+    sort = sorted(lst[0])
+    for i in range(len(sort)):
+        if letters.get(sort[i]) != None:
+            letters[sort[i]] = letters[sort[i]] + 1
+        else:
+            letters[sort[i]] = 1
+    print(letters)
 
 def mergeSortLists(list1, list2):
     newList = []
@@ -43,6 +50,43 @@ def mergeSortLists(list1, list2):
         newList.append(list2[j])                
     return newList
 
+def bracketChecker(string):
+    openStacker = Stack()
+    for i in range(len(string)):
+        tempChar = string[i]
+        if i == 0:
+            if tempChar == ">" or tempChar == ")" or tempChar == "]" or tempChar == "}":
+                return False
+        if tempChar == "<" or tempChar == "(" or tempChar == "[" or tempChar == "{":
+            openStacker.push(tempChar)
+        elif tempChar == ">":
+            if openStacker.peek() == "<":
+                openStacker.pop()
+            else:
+                return False
+        elif tempChar == ")":
+            if openStacker.peek() == "(":
+                openStacker.pop()
+            else:
+                return False
+        elif tempChar == "]":
+            if openStacker.peek() == "[":
+                openStacker.pop()
+            else:
+                return False
+        elif tempChar == "}":
+            if openStacker.peek() == "{":
+                openStacker.pop()
+            else:
+                return False
+        else:
+            raise Exception()
+    try:
+        if openStacker.peek() is not None:
+            return False
+    except Exception:
+        return True
+
 def intOccur(lst):
     occur = UnsortedMap()
     for i in range(len(lst)):
@@ -79,3 +123,7 @@ if __name__ == "__main__":
     getPrimes(l2)
     l4 = [4, 6, 4, 10, 33, 10]
     intOccur(l4)
+    l5 = ['act']
+    anagramDetect(l5)
+    l6 = '{(})<>[]'
+    print(bracketChecker(l6))
