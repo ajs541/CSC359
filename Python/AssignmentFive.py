@@ -127,8 +127,7 @@ def getPrimes(lst):
         print("No primes")
         return None   
     print(primeList)
-                    
-
+#main/tester area
 if __name__ == "__main__":
     stupidLargePrime = 2**82589933 - 1
     l2 = [7919, 7907, 7901, 7883, 7879, 7877, 7873, 7867, 7853, 7841, 7829, 7823, 7817, 7793, 7789, 7759, 7757, 7753, 7741, 7727]
