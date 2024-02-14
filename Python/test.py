@@ -96,7 +96,40 @@ def doNotDoThis():
         k = k*k**10
         print(k)
 
+def quickSort(list, start, end):
+    if start < end:
+        pivot = partition(list, start, end)
+        quickSort(list, start, pivot-1)
+        quickSort(list, start, end)
+
+def partition(list, start, end):
+    key = list[end]
+    j = start - 1
+    for i in range(start, end):
+        if list[i] < key:
+            j+=1
+            list[i], list[j] = list[j], list[i]
+    list[j+1], list[end] = list[end], list[j+1]
+    return j+1
+
+def fibbonachi(n):
+    if n < 0:
+        raise Exception()
+    list = []
+    t = 0
+    while len(list) != n:
+        if t <= 1:
+            list.append(1)
+            t+=1
+        else:
+            temp = list[t-1] + list[t-2]
+            list.append(temp)
+            t+=1
+    return list
+    
 if __name__ in "__main__":
     ints = [4, 7, 2, 0, 3]
     sum = 5
     print(intSum(ints, sum))
+    fib = fibbonachi(100)
+    print(fib)
