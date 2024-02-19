@@ -16,6 +16,8 @@ while not finish:
         i = 0
 """
 import math
+from copy import deepcopy
+
 def moveZeroesLeft(list):
     zeroList = []
     otherList = []
@@ -126,10 +128,42 @@ def fibbonachi(n):
             list.append(temp)
             t+=1
     return list
+
+def permutations(str):
+    dict = {}
+    toList = list(str)
+    intoDictionary(toList, dict)
+    print(dict)
+    
+def intoDictionary(list, dict):
+    for j in range(len(list)):
+        temp = deepcopy(list[j])
+        tempList = deepcopy(list)
+        tempList.remove(temp)
+        dict[temp] = tempList
+        
+def calculatePrice(rodLength, priceList):
+    maxPrice = [-1] * rodLength
+    firstCut = [-1] * rodLength
+    maxPrice[0], firstCut[0] = 0, 0
+    maxPrice[1] = priceList[1]
+    firstCut[1] = 1
+    for i in range(2, rodLength):
+        maxPrice[i] = 0
+        for j in range(1, i+1):
+            currentPrice = priceList[j] + maxPrice[i-j]
+            if currentPrice > maxPrice[i]:
+                maxPrice[i] = currentPrice
+                firstCut[i] = j
+    return maxPrice, firstCut
     
 if __name__ in "__main__":
     ints = [4, 7, 2, 0, 3]
     sum = 5
     print(intSum(ints, sum))
-    fib = fibbonachi(100)
+    fib = fibbonachi(10)
     print(fib)
+    permutations("abc")
+    why = "this is a string"
+    price = [0, 1, 5, 8, 9, 10, 12, 17, 20, 24, 28]
+    print(calculatePrice(8, price))
