@@ -17,6 +17,7 @@ while not finish:
 """
 import math
 from copy import deepcopy
+from Stack import Stack
 
 def moveZeroesLeft(list):
     zeroList = []
@@ -156,7 +157,27 @@ def calculatePrice(rodLength, priceList):
                 maxPrice[i] = currentPrice
                 firstCut[i] = j
     return maxPrice, firstCut
-    
+
+def reverseString(string):
+    stringStack = Stack()
+    i = 0
+    while i < string.length():
+        if string[i] == "&":
+            temp = "&"
+            j = 1
+            while temp[j] != ";":
+                temp = temp + string[i]
+                i += 1
+                j += 1
+            stringStack.push(temp)
+        else:
+            stringStack.push()
+            i += 1
+    final = ""
+    while stringStack.peek() != None:
+        final += stringStack.pop()
+    return final
+
 if __name__ in "__main__":
     ints = [4, 7, 2, 0, 3]
     sum = 5
