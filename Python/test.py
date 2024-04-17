@@ -188,3 +188,5 @@ if __name__ in "__main__":
     why = "this is a string"
     price = [0, 1, 5, 8, 9, 10, 12, 17, 20, 24, 28]
     print(calculatePrice(8, price))
+    aString = "fried"
+    print(reverseString(aString))
