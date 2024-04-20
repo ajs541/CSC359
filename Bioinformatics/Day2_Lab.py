@@ -1,5 +1,7 @@
 '''This document contains the key functions created as part of Day 2's lab.'''
 import matplotlib.pyplot as plt
+import numpy as np
+import math
 
 def PatternCount(Text, Pattern):
     '''Counts how many times the pattern occurs
@@ -180,4 +182,88 @@ def freqWordsWithMisMatchRC(text, k, d):
         if freqMap[key] == m:
             patterns.append(key)
     return patterns
+
+def count(dna):
+    l=len(dna[0])
+    matrix: np.ndarray = np.zeros((4,l))
+    for i in range(l):
+        dict = {'A':0, 'C':0, 'G':0, 'T':0}
+        for seq in dna:
+            dict[seq[i]]+=1
+        j=0
+        for key in dict:
+            matrix[j,i]=dict[key]
+            j+=1
+    return matrix
+
+def profile(dna):
+    return count(dna)*(1/4)
+
+def entropy(profile):
+    col = len(profile[0])
+    matrix = np.zeros((1,col))
+    for i in range(col):
+        temp = []
+        for j in range(4):
+            if profile[j,i]>0:
+                temp.append(profile[j,i])
+        sum = 0
+        for k in temp:
+            sum += k * (math.log2(k))
+        if sum == 0:
+            matrix[0,i] = sum
+        else:
+            matrix[0,i] = -sum
+    return matrix
+
+def get_kmers(dna,k):
+    return list(set([dna[i:i+k] for i in range(len(dna)-k+1)]))
+def MotifEnumeration(Dna, k, d):
+    # Brute force algorithm for motif finding.
+    # Given a collection of strings Dna and an integer d,
+    # a k-mer is a (k,d)-motif if it appears in every string from
+    # Dna with at most d mismatches.
+    patterns = set()
+    for pattern in get_kmers(Dna[0],k):
+        for pat in neighbors(pattern,d):
+            match_all = True
+            for dna in Dna[1:]: # Check each string of DNA
+                # Need to see if any neighbors of our pattern are in t
+                match_all = match_all and any([neighbor in dna for neighbor in neighbors(pat,d)])
+            if match_all: # if
+                patterns.update([pat])
+    return patterns
+
+def distBetweenPatternAndStrings(pattern, dnaList):
+    k = len(pattern)
+    dist = 0
+    for dna in dnaList:
+        hDist = math.inf
+        for kmer in get_kmers(dna,k):
+            if hDist > hammingDist(pattern, kmer):
+                hDist = hammingDist(pattern, kmer)
+        dist+=hDist
+    return dist
+
+def score(motifList, dnaList):
+    dict = {}
+    for motif in motifList:
+        dict[motif]=distBetweenPatternAndStrings(motif, dnaList)
+    return dict
+
+def allString(k):
+    string = ""
+    for _ in range(k):
+        string+="A"
+    return(list(neighbors(string, k)))
+
+def medianString(dna, k):
+    dist = math.inf
+    patterns = allString(k)
+    for i in range(len(patterns)):
+        pattern = patterns[i]
+        if dist > distBetweenPatternAndStrings(pattern, dna):
+            dist = distBetweenPatternAndStrings(pattern, dna)
+            median = pattern
+    return median
 
