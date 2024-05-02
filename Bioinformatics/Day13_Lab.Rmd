@@ -1,0 +1,433 @@
+---
+title: "Day 13 Lab"
+output:
+  pdf_document: default
+  html_document: default
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Day 13 Lab - Introduction to R
+
+The purpose of this lab is to give you a *basic* introduction to R
+syntax.
+
+Getting help:
+
+If you know what function you want to use but need a bit more
+information try `help(function)` or `?function`.
+
+If you don't know what function you want to use, but know a keyword
+associated with it (for example you know you want to find the variance
+but don't know what function to use, try `help.search(variance)` or
+`??variance`
+
+## Section 1 - Basic Data Types:
+
+#### (1) Practice creating variables in R. Make a few that are numeric, some logical and a few character type objects. Use the `class` and `typeof` functions to verify that you have done it.
+
+```{r}
+x <- "hello"
+y <- 5L
+z <- 3.14
+a <- TRUE
+b <- 4i
+class(x)
+class(y)
+class(z)
+class(a)
+class(b)
+```
+
+#### (2) What are the arithmetic and logical operators in R? Practice using them here.
+
+```{r problem2}
+add <- 5 + 6
+sub <- 50 - 43
+multi <- 4 * 33
+div <- 8 / 2
+
+```
+
+#### (3) Another way to check the data type is the `is` function. With this function you can ask if an object is of a certain class and get a logical value back out:
+
+-   `is.numeric(5)`
+-   `is.character("a")`
+
+Try these out using different object types.
+
+```{r problem3}
+is.numeric(5)
+is.character("a")
+```
+
+#### (4) A complementary function is `as`. This works the same way as `is` but will instead try to convert between object types. Try it out using different object types.
+
+*Example: `as.numeric("5")`*
+
+```{r problem4}
+as.numeric("5")
+```
+
+#### (5) In R the `length` function will tell you how long your object is and the `nchar` function will tell you how many characters are in a string. Try them both out with a character object. What is the difference?
+
+```{r problem5}
+
+```
+
+#### (6) Grabbing a portion of a character object in R is a more difficult than in python. We cannot use indexing the way we did in python. Now we are going to rely on the `substr` function. This will allow you to take a segment of a string. Use the string `"R is awesome!"` and try to select the word `"awesome"`.
+
+`substr(aString, start, end)` *Note: End is inclusive*
+
+```{r problem6}
+string = "R is awesome!"
+substr(string, 6, 12)
+```
+
+#### (7) Indexing in python starts at 0. What value does indexing in R start with? Does negative indexing work in R?
+
+```{r problem7}
+#R indexing starts at 1 rather than 0
+list = 1:5
+list[-1]
+```
+
+## Section 2 - Vectors
+
+<font color = #800080><b>Vectors</b></font> are series of **components**
+that all have the same type.
+
+#### (8) Use the `c`, `seq`, and `rep` function to make a few vectors. Store those objects in variables.
+
+```{r problem8}
+vec1 = c("hi", "this", "is", "a", "vector")
+vec2 = seq(1:10)
+vec3 = rep(3, 4)
+vec4 = seq(11:20)
+```
+
+#### (9) What are the classes of the vectors you created? What are their lengths?
+
+```{r problem9}
+class(vec1)
+class(vec2)
+class(vec3)
+length(vec1)
+length(vec2)
+length(vec3)
+```
+
+#### (10) What operators work with vectors?
+
+```{r problem10}
+vec5 = vec2 + vec4
+print(vec5)
+```
+
+#### (11) You can use indexing with the vector objects. Pracitce selecting single componets.
+
+```{r problem11}
+vec5[2]
+```
+
+#### (12) You can select more than one component using another vector. See the example below and practice using this feature. Look up the `seq` function and make sure you know how it works.
+
+```{r problem12}
+
+ex_vec = c('Vector', 'of', 'character', 'components')
+ex_vec[seq(1,4,2)]
+
+```
+
+#### (13) Arithmetic vectors will apply to an entire vector. Create a vector of numbers from 1 to 15 and divide the vector by 2.
+
+```{r problem13}
+numbers = seq(1:15)/2
+print(numbers)
+```
+
+#### (14) R has a useful function called `which`. This will take in a logical vector and return to you the index locations for the TRUE values. Use the `which` function to locate the values that are less than 5 from your random numbers. Then, use the `which` function to select all values from your vector that are less than 5.
+
+```{r problem14}
+logs = numbers[which(numbers < 5)]
+print(logs)
+```
+
+#### (15) R has many functions built-in for generating random numbers. Use `rnorm` to generate a vector of length 50 from a normal distribution with mean 10 and sd of 5.
+
+`rnorm(n, mean, sd)`
+
+\*Note: R has many built in distributions such as uniform
+`runif(n, min, max)`, poisson `rpois(n, lambda)`, binomial
+`rbinom(n, size, prob)` and many more `?Distributions`
+
+```{r problem15}
+randoms <- rnorm(50, 10, 5)
+print(randoms)
+```
+
+#### (16) What is the minimum and maximum of your vector of random numbers?
+
+*Hint: min and max work just like they do in python*
+
+```{r problem16}
+print(max(randoms))
+print(min(randoms))
+```
+
+#### (17) `which.min` and `which.max` will tell you the location of your min and max. Use those now.
+
+```{r problem17}
+print(which.min(randoms))
+print(which.max(randoms))
+```
+
+#### (18) Components in vectors can be given names. The `names` function will allow you to view the names of your components as well as set the names. Create a new vector and give each component a name.
+
+*I have provided some code as an example.*
+
+```{r problem18}
+my_name = c(fname = "Lauren", lname = "Jepsen")
+print(my_name)
+print(names(my_name))
+
+numbers = 1:3
+names(numbers) = c("one", "two", "three")
+print(numbers)
+
+# Put your code here:
+my_name_2 <- c(fname = "Aaron", lname = "Standefer")
+print(my_name_2)
+print(names(my_name_2))
+
+nums = 4:6
+names(nums) = c("four", "five", "six")
+print(nums)
+```
+
+## Section 3 - Matrices
+
+These are 2D matrices the way we would think of them in math.
+
+They can be created using the `rbind`, `cbind`, `matrix`, and
+`as.matrix` functions.
+
+#### (19) Run the following code then look at the resulting variables. What are the differences between mat1 and mat2?
+
+```{r problem19}
+mat1 = matrix(1:10, nrow = 5, ncol = 2, byrow = T)
+mat2 = matrix(1:10, nrow = 5, ncol = 2, byrow = F)
+print(mat1)
+print(mat2)
+#I changed one of the byrow variables to False to illustrate what i think
+#you were trying to show.  Major difference is how the matrix is filed.
+```
+
+#### (20) Create two vectors of equal length. Use `rbind` and `cbind` on them. What are the differences between `rbind` and `cbind`?
+
+*Example: `rbind(1:5,6:10)`*
+
+```{r problem20}
+
+```
+
+#### (21) The `apply` funciton will let you perofrm operations using entire rows or colums. Use `apply` to get row and column sums from mat1.
+
+`apply(X, MARGIN, FUN, ..., simplify = TRUE)` \* MARGIN = 1 for rows \*
+MARGIN = 2 for colums
+
+```{r problem21}
+
+```
+
+#### (22) Just like with vectors, you can provide names for your rows and columns. Now use the `rownames` and `colnames` function to change the names associated with one of your matrices.
+
+```{r problem22}
+
+```
+
+#### (23) Practice taking pieces of your matrix. What are the different ways this can be done?
+
+```{r problem23}
+
+```
+
+#### (24) `dim`, `nrow`, and `ncol` are useful functions to check the size of your matrix. Try them now, how do they work? Try also the `length` function.
+
+```{r problem24}
+
+```
+
+## Section 4 - Data Frames
+
+Data frames are lists of vectors of the same length. It allows you to
+combine values of different type into a matrix like format.
+
+These are most often used for data tables and can be compared to
+Python's pandas data frame.
+
+#### (25) Use the following to create a sample data frame. Look at your data frame.
+
+```{r problem25}
+num = c(1,2,3)
+let = c("a", "b", "c")
+logic = c(T, F, T)
+
+df = data.frame(num, let, logic)
+
+```
+
+#### (26) What are the column names of your data frame?
+
+*The function `colnames` will tell you what your column names are.*
+
+```{r problem26}
+
+```
+
+#### (27) You can use `$` notation to access entire columns. Try
+
+`df$num`. What does that give you?
+
+```{r problem27}
+
+```
+
+#### (28) You can also access information in other ways. Try getting different pieces of information back out of your data frame
+
+`df[rnum, colnum]` `df[,"colnumname"]`
+
+```{r problem28}
+
+```
+
+#### (29) Create your own data frame and practice accessing different values in your data frame.
+
+```{r problem29}
+
+```
+
+#### (30) R has loops but they are inefficient. Use a loop to pring every element inside the first column of your data frame.
+
+*Your for loop will look something like this:*
+
+for (loopVariable in Sequence){ print(loopVariable) }
+
+```{r problem30}
+
+```
+
+## Section 5 - Lists
+
+A list is a generic vector that can contain objects of different types.
+
+Lists can have named components.
+
+This is often the object of choice for output from various functions.
+
+#### (31) Try creating the following list. Look at it.
+
+```{r problem31}
+n = c(2, 3, 5)
+s = c("aa", "bb", "cc", "dd", "ee")
+b = c(TRUE, FALSE, TRUE, FALSE, FALSE)
+x = list(n,s,b, 3)
+```
+
+#### (32) Does your list have names? If it does not, name your components `n`, `s`, `b`.
+
+```{r problem32}
+
+```
+
+#### (33) There are many ways to access vectors inside of lists. The following represent 3 different ways to access the vector `n`. Run them each and then try to access the vector `b`.
+
+*Many of the objects we will work with over the next couple of days will
+be lists. Know how to access their components.*
+
+```{r problem33}
+x$n # Works with named components
+x[['n']] # Double square brackets for accessing elements of a list
+x[[1]]
+```
+
+#### (34) Just like we had `apply` for array objects we have `lapply` for lists. Use lapply on x to find the components that are numeric.
+
+`lapply(aList, FUN)`
+
+```{r problem34}
+
+```
+
+#### (35) What does the `attributes` function tell you about your list?
+
+*x doesn't have a lot of information associated with it. This will be
+more useful when you have outputs from functions*
+
+```{r problem35}
+
+```
+
+## Section 6 - Plotting
+
+R has some really great plotting features. We are going to going to very
+briefly explore some of the most basic plotting features here.
+
+#### (36) Generate a vector of normally distributed random numbers. Pick your mean and sd.
+
+```{r problem36}
+
+```
+
+#### (37) What is the mean and standard deviation of your vector? How closely do they match the mean and sd you used in question 36?
+
+*Use the mean and sd functions.*
+
+```{r problem37}
+
+```
+
+#### (38) Use the plot function to plot your values. Look up at the help documentation and see if you can't figure out how to add a y-axis label and a title.
+
+```{r problem38}
+
+```
+
+#### (39) The above was a terrible representation of your data. Try generating a histogram `hist` and a `boxplot` of your numbers.
+
+*Try to make these plots look nice. Change colors, add labels, etc.*
+
+```{r problem39}
+
+```
+
+## Section 7 - Functions
+
+Just like with other programming languages, you can define your own
+functions.
+
+#### (40) Create a function that will slice a string in a way that is similar to python. We want this function to take in 4 parameters: string, start=1, stop = nchar(string), step=1.
+
+Here are some building blocks to help: \* `strsplit(string, "")` will
+create a list containing a vector. The components of the vector will
+have individual characters. \* `strsplit(string, "")[[1]]` pulls the
+vector out of the list. This vector will have each individual character
+in it. \* `strsplit(string, "")[[1]][inds]` This will grab the
+characters at the specified index values `inds`. `inds` can be numeric
+or logical. \* `paste(***, collapse = "")` can collapse the vector of
+characters down into a single string. Replace `***` with
+`strsplit(string, "")[[1]][inds]`
+
+A function can be created as follows:
+
+functionName = function(parameter1, parameter2 = defaultValue){ code \#
+automatically returns last value produced.}
+
+```{r problem40}
+
+```
