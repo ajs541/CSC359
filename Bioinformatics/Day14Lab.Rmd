@@ -1,0 +1,364 @@
+---
+title: "Day14_Lab"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Day 14 - Structural Analysis with R
+
+The goal of today's lab is two fold.
+We learned that structure is more conserved than sequence.
+We will explore that by comparing actin to a distant homolog MreB.
+
+### Section 1 - Preparation and Loading Data
+
+#### (1) Install `bio3d` and `nameNeedle`
+
+bio3d is an R package designed to work with structures and simulation data.
+nameNeedle is an implementation of the Needleman-Wunsch algorithm.
+
+To install the package type `install.package("bio3d")`.
+Once the package is installed, load it.
+`library(bio3d)`.
+Do the same with the text.alignment package.
+
+<font color = 'gray'>The `library(packagename)` is similar to the `import package` in python.
+One main difference is that you don't need to use dot notation to access objects inside the package in R.
+</font>
+
+```{r Install and Load Packages}
+library(bio3d)
+library(NameNeedle)
+library(knitr)
+```
+
+#### (2) Now we want to read our data into R. Bio3d has a function called `read.pdb` which takes in a pdb. It can read a PDB in from a file or from the PDB. We will do both. First, load in the PDB structure `4CZI` for MreB. Next, load in the structure of actin from the PDB file on Moodle.
+
+`actin = read.pdb("actin.pdb")`
+
+```{r}
+actin = read.pdb("actin.pdb")
+mreb = read.pdb("4CZI")
+```
+
+### Section 2 - Explore the pdb objects.
+
+#### (3) What class of object do you have?
+
+```{r}
+class(actin)
+```
+
+#### (4) What attributes do your objects have? Look up the read.pdb functions help documentation for information on each attribute.
+
+*Use the `attributes` function.*
+
+```{r}
+attributes(actin)
+```
+
+#### (5) Start by looking at the `atom` component. This is the body of the PDB file. What are the dimensions? The number of rows represent the number of atoms in the structure.
+
+`View(actin$atom)`
+
+```{r}
+View(actin$atom)
+```
+
+This is arguably the most important piece inside the pdb object.
+
+The first column is type.
+Typically an `ATOM` designation implies protein and `HETATOM` implies a small molecule.
+Coming out of MD simulations, all atoms get the designation of `ATOM`, even if they are really a small molecule bound to the larger protein.
+
+`eleno` is the atom number.
+Each atom inside the pdb file gets a unique number
+
+`elety` describes the atom with some *organic chemistry* information included.
+
+`resid` describes the amino acid or group name.
+Amino acids have longer abbreviation of 3 letters that are used here.
+Some of the names you see aren't amino acids but are small modifications to the amino acids.
+Such as the `ACE` group in actin.
+This is something called an acetylation.
+
+`chain` is used to delineate between proteins for pdbs with multiple protein subunits.
+For example, the hemoglobin protein we looked at had chains A and C for subunits alpha and B and D for HBB.
+
+`resno` this is the residue number
+
+`x`, `y`, and `z` are the xyz coordinates for the atom
+
+`elesy` is the simplified atom representation.
+These are the same characters you would find on a periodic table.
+
+#### (6) The `xyz` component should be 3x longer than the number of rows in the `atom` component. Confirm that this holds up.
+
+The xyz component holds all the xyz coordinates for all of the atoms in the file.
+
+`atom1x atom1y atom1z atom2x atom2y atom2z ...`
+
+```{r}
+View(actin$xyz)
+```
+
+#### (7) Finally, the `calpha` component is logical. If the component is TRUE, the corresponding atom represents the c-alpha position on the protein backbone. The length of this component should match the number of rows in the `atom` component. Verify this.
+
+<img src="https://plantlet.org/wp-content/uploads/2019/12/primaryStructure4.jpg"/>
+
+The c-alpha position is the black carbon (C) in the image above.
+Protein structure is often simplified down to just the c-alpha positions.
+
+```{r}
+View(actin$calpha)
+length(actin$calpha)
+```
+
+### Section 3 - Sequence Comparison
+
+Now that you are familiar with the pdb objects, it is time to get to work comparing structures.
+Before we can compare the structures of MreB and Actin, we need to compare their sequences and get a sequence alignment.
+We will use the `needles` function in the `nameNeedle` package.
+This is an implementation of the Needleman-Wunsch algorithm.
+This function needs two character objects of length 1 to operate.
+Lets get those sequences:
+
+#### (8) Use the `pdbseq` function to access the sequence information stored in the pdb objects. Save the output from the function into a variable. What kind of object do you have? What is its length?
+
+`variablename = pdbseq(pdbobj)`
+
+```{r}
+exampleA = pdbseq(actin)
+exampleB = pdbseq(mreb)
+class(exampleA)
+length(exampleA)
+class(exampleB)
+length(exampleB)
+```
+
+#### (9) In part 8 you created vectors of characters. Collapse the vector down into a single character object of length 1 using the paste function.
+
+*Hint: You did this in lab yesterday. Additionally, nchar will now match the length of the object created in part 8.*
+
+```{r}
+actin_seq_single = paste(exampleA, collapse = "")
+mreb_seq_single = paste(exampleB, collapse = "")
+print(actin_seq_single)
+```
+
+#### (10) Use `needles` to align the two sequences.
+
+`aln_nw = needles(seq1, seq2, params = data.frame(MATCH = 1, MISMATCH = -1, GAP = -1, GAPCHAR = "-")`
+
+For this step, use a match score of 1, a mismatch of -1 and a gap of -1.
+We don't want to over emphasize matches here since we know the two sequences are distantly related.
+
+We also want to change the gap character from `*` to `-` to match how bio3d handles gaps.
+
+```{r}
+aln_nw = needles(actin_seq_single, mreb_seq_single, params = data.frame(MATCH = 2, MISMATCH = -1, GAP = -1, GAPCHAR = "-"))
+```
+
+#### (11) Look at your alignment. What are the attributes of the alignment object? What are the lengths and number of characters in `align1` and `align2`?
+
+```{r}
+attributes(aln_nw)
+length(aln_nw$align1)
+length(aln_nw$align2)
+print(aln_nw$align1)
+print(aln_nw$align2)
+```
+
+#### (12) Now that we have our needles alignment, we need to convert it into a format we can use with bio3d. Use `strsplit` to convert `align1` and `align2` into a vectors of characters.
+
+Split on the empty string.
+`strsplit` will provide an output of a list.
+The vector you want will be the first component of the list.
+
+```{r}
+align_split_1 = strsplit(aln_nw$align1, "")[[1]]
+align_split_2 = strsplit(aln_nw$align2, "")[[1]]
+```
+
+#### (13) Use `seqbind` to join the vector sequences from part 12 into a bio3d alignment object. Look at the resulting object. What attributes and information does it have?
+
+This step will allow us to use bio3d's functions.
+Bio3d would like sequence alignments in matrix format.
+Each sequence will be a row and each character (amino acid or gap) from the alignment will have a column.
+
+```{r}
+align_together <- seqbind(align_split_1, align_split_2)
+attributes(align_together)
+names(align_together$ali)
+names(align_together$id)
+```
+
+#### (14) Before we loose track of what each sequence in the bio3d alignment object corresponds to, lets name them. Change the rownames of the `ali` matrix in the alignment object to match the names of the sequences (actin and mreB). Change the vector stored in `id` to match as well.
+
+```{r}
+rownames(align_together$ali) <- c("actin", "mreB")
+names(align_together$id) <- c("actin", "mreB")
+```
+
+#### (15) Look at the alignment object (print it to the screen). What do you think the characters underneath the amino acids mean?
+
+```{r}
+print(align_together)
+# * shows a match
+# ^ is some type of significant mismatch, either low energy or high energy
+# (not sure)
+```
+
+#### (16) Use the `aln2html` function to view the alignment in a different format.
+
+```{r}
+aln2html(align_together)
+```
+
+#### (17) We are finally ready to really compare the two sequences! Use bio3d's `seqidentity` to calculate the sequence identity and the sequence similarity between MreB and Actin. Comment on your findings.
+
+<font color = #800080><b>Sequence Identity</b></font> is a measure of how many amino acids match exactly.
+<br> <font color = #800080><b>Sequence Similarity</b></font> is a measure of how closely two sequences resemble each other.
+For example, an A in one sequence would have a high similarity to a G in another but a very low similarity if compared to a W.
+
+```{r}
+real_alignment <- seqidentity(align_together)
+colnames(real_alignment) = c("actin", "mreB")
+rownames(real_alignment) <- c("actin", "mreB")
+print(real_alignment)
+
+```
+
+### Section 4 - Structural Comparison
+
+Now that we have our alignment, we have a basis to start comparing the structure of the two proteins.
+The goals of this section are to (1) superimpose the two structures and (2) measure their similarity using RMSD and TM-Align.
+
+#### (18) Look at your original sequence objects created by the `pdbseq` function. What to the names represent?
+
+The residue numbers "resno" of the amino acids inside the pdb file.
+`names(mreb_seq)`
+
+```{r}
+names(exampleA)
+```
+
+#### (19) From our alignment, select the column numbers that represent non-gap characters for actin. Store those numbers in a vector. Repeat for mreB. We will call these `actin_resno_inds` and `mreb_resno_inds` respectively.
+
+The names of the components in the `pdbseq` objects are the residue numbers from the original pdb file.
+We need to get a vector of residue numbers from each protein that correspond to aligned residues in each protein.
+The next several steps are designed to help you generate those numbers.
+
+*Hint: Use the `which` function. The which function will take a vector of booleans and return a vector of index values corresponding to the TRUE values in the original boolean vector.*
+
+`actin_resno_inds = which(aln$ali['actin', ] != "-")`<br> `mreb_resno_inds = which(aln$ali['mreb',] != '-')`<br>
+
+```{r}
+actin_resno_inds = which(align_together$ali['actin',] != "-")
+mreb_resno_inds = which(align_together$ali['mreB',] != '-')
+print(mreb_resno_inds)
+```
+
+#### (20) The vectors created in step 19 (`actin_resno_inds` and `mreb_resno_inds`) should be the same length as the vectors created from the `pdbseq` function. Verify this and then set the names of the vector components from part 19 to equal the names of the vector components from the `pdbseq` object.
+
+```{r}
+length(actin_resno_inds)
+length(exampleA)
+length(mreb_resno_inds)
+length(exampleB)
+names(actin_resno_inds) <- names(exampleA)
+names(mreb_resno_inds) <- names(exampleB)
+actin_resno_inds[1:10]
+print("")
+mreb_resno_inds[1:10]
+```
+
+#### (21) Now, find the index values for items in `actin_resno_inds` that are in `mreb_resno_inds`, call this `a.inds`. Then ask which `mreb_resno_inds` are in `actin_resno_inds`, call these `m.inds`. How many aligned residues were there?
+
+In python you can use the keyword `in` to ask if one thing is in another.
+Similarly, in R you can use the keyword `%in%`.
+
+With R, you can do `vec1 %in% vec2`.
+This will give you a logical vector with the same length as `vec1` and tell you which items from `vec1` are also in `vec2`.
+The `which` function can convert the logical vector to a vector of index values.
+
+```{r}
+a.inds <- actin_resno_inds[which(actin_resno_inds %in% mreb_resno_inds)]
+a.inds[1:10]
+m.inds <- mreb_resno_inds[which(mreb_resno_inds %in% actin_resno_inds)]
+print('')
+m.inds[1:10]
+matched_resno <- data.frame("actin" = names(a.inds), "mreb" = names(m.inds))
+dim(matched_resno)
+```
+
+### (23) Use the `atom.select` function to select from the actin and mreb pdbs, the c-alpha atoms for the aligned residues.
+
+Bio3d has a useful function called `atom.select`.
+This lets you query a pdb object and returns to you a matrix of indices for the `atom` portion of the pdb object as well as a matrix of indices for the `xyz` portion of the pdb object.
+
+`atom.select(pdb, elety = "CA", resno = as.numeric(resno)`
+
+```{r}
+actin_sel <- atom.select(actin, elety = "CA", resno = as.numeric(matched_resno$actin))
+mreb_sel <- atom.select(mreb, elety = "CA", resno = as.numeric(matched_resno$mreb))
+attributes(actin_sel)
+```
+
+#### (24) Time to Fit! We will use the `fit.xyz` function to superimpose the mreb structure (mobile) onto the actin structure(fixed).
+
+`fit.xyz(fixed, mobile, fixed.inds, mobile.inds)`
+
+-   `fixed` is a vector of xyz coordinates (found in the pdb file) for the template structure.
+    In our case, this is actin.
+
+-   `mobile` is a vector of xyz coordinates for the structure we want to change the location of.
+    In our case, this is mreB.
+
+-   `fixed.inds` are the xyz index locations in our template structure for the atoms that should be used in the fitting calculations.
+    This will be the xyz component of our atom.select object for actin.
+
+-   `mobile.inds` are the xyz index locations in the structure we want to change the location of.
+    In our case, this is the xyz component of our atom.select for mreB.
+
+This function will return the new coordinates for the 'mobile' structure, in our case mreB.
+
+```{r}
+mreb_fit <- fit.xyz(actin$xyz, mreb$xyz, actin_sel$xyz, mreb_sel$xyz)
+mreb_fit[1:6]
+mreb$xyz[1:6]
+```
+
+#### (25) Now that the structures are aligned, measure RMSD. Use only the C-alpha atoms of aligned residues in the calculation. What was the RMSD?
+
+Bio3d has an `rmsd` function.
+Look at the help documentation and see if you can't figure out how to do it.
+
+```{r}
+actin_mreb_rmsd <- rmsd(actin$xyz, mreb_fit, a.inds = actin_sel$xyz, b.inds = mreb_sel$xyz)
+actin_mreb_rmsd
+```
+
+*If your RMSD is greater than 10, you did something wrong.*
+
+#### (26) RMSD Only gives us part of the picture. Use `write.pdb` to write out a new mreb pdb. Be sure to use the `xyz =` flag and provide the fitted xyz coordinates.
+
+```{r}
+write.pdb(mreb, xyz = mreb_fit, file = "mreb_fit.pdb")
+```
+
+### actin_selSection 5 - Viewing the Structures
+
+#### (27) Download the fitted mreB pdb file and the original actin pdb from the server. On your computer, open up mreB and actin inside of [PDB's molecule viewer](https://www.rcsb.org/3d-view).
+
+Once your files are loaded, change your view to Orthographic and set clipping to 0.
+
+#### (28) What do you notice about the structural similarity of Actin and MreB?
+
+#### (29) Save an image of your aligned proteins and upload that image with your lab.
