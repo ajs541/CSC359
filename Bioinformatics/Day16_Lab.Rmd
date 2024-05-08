@@ -1,0 +1,153 @@
+---
+title: "Day16_Lab"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Day 16 Lab: Simulation
+
+#### (1) Start by loading in the bio3d and MASS libraries
+
+```{r}
+library(bio3d)
+library(MASS)
+library(parallel)
+```
+
+#### (2) Load our data. You can read-in the pdb using the `read.pdb` file and the trajectory file can be read in using `read.dcd`.
+
+```{r}
+pdb = read.pdb("actin.pdb")
+dcd = read.dcd("fit_prod0t50.dcd")
+```
+
+#### (3) Look at the dimension of your dcd object. The rows corresponds to the number of frames or 'snapshots' of the proteins movement. The columns represent the xyz coordinates for every atom.
+
+If everything is correct, \`ncol(actin_trj) == ncol(actin_xyz)\`\`\`.
+
+```{r}
+attributes(dcd)
+dim(dcd)
+ncol(pdb$xyz) == ncol(dcd)
+```
+
+#### (4) Fit each frame of the simulation to the reference pdb file. Fit using just c-alpha atoms.
+
+During simulations, proteins will move or rotate inside of their water box. These are not motions we are interested in.
+
+*Hint: Use the `atom.select` function to find all c-alpha atoms.*
+
+```{r}
+selection = atom.select(pdb, elety="CA")
+fit_thing = fit.xyz(pdb$xyz, dcd, selection$xyz, selection$xyz)
+View(fit_thing)
+```
+
+#### (5) Measure RMSD across the simulation. You will compare each frame to the pdb structure.
+
+Measuring RMSD across a simulation will let you monitor for large scale shifts in protein structure. It will also help you see if the protein has equilibrated.
+
+The RMSD function in bio3d can take in a full trajectory object as the mobile indices.
+
+```{r}
+View(pdb$xyz)
+measures = rmsd(pdb$xyz, fit_thing, selection$xyz, selection$xyz)
+```
+
+#### (6) Plot your RMSD values from part 5. Each point measures RMSD between the current frame and the pdb reference structure.
+
+```{r}
+plot(measures, type = 'l')
+abline(v=200, col = "red", lwd = 2)
+```
+
+#### (7) Around what frame does your simulation seem to level off? Describe the graph from part 6.
+
+About 200. It climbs up rapidly, then levels off here and just varies around the same Y axis.
+
+#### (8) Trim off the beginning of the simulation where it has not yet equilibrated.
+
+```{r}
+nrow(fit_thing)
+fit_thing = fit_thing[200:nrow(fit_thing),]
+nrow(fit_thing)
+```
+
+#### (9) Now we want to look at RMSF. How is RMSF different from RMSD?
+
+#### (10) Measure RMSF for your c-alpha atoms.
+
+RMSF measures how much each atom moves throughout a simulation. A higher RMSF means a more mobile atom, and in this case a more mobile atom.
+
+```{r}
+actin_rmsf = rmsf(fit_thing[,selection$xyz])
+length(actin_rmsf)
+```
+
+#### (11) Change names of rmsf vector to match resno.
+
+```{r}
+names(actin_rmsf) = pdb$atom$resno[selection$atom]
+actin_rmsf[1:10]
+```
+
+#### (12) Plot your RMSF. Are there certain regions of the protein that have a higher RMSF than others?
+
+```{r}
+plot(as.numeric(names(actin_rmsf)), actin_rmsf, type = 'l', xlab = "Residue Number", ylab = "RMSF (A)")
+abline(h = 1, col = 'red', lwd = 2)
+```
+
+#### (13) Use the `atom.select` function to select the CA atoms of the residues that have an RMSF \< 1.0.
+
+*Hint: The names and which functions might be useful here.*
+
+```{r}
+actin_resno_small_rmsf = names(actin_rmsf)[which(actin_rmsf < 1)]
+actin_resno_small_rmsf = as.numeric(actin_resno_small_rmsf)
+
+actin_rmsf_sel = atom.select(pdb, elety = "CA", resno = actin_resno_small_rmsf)
+length(actin_rmsf_sel$atom)
+```
+
+#### (14) Fit the trajectory again, this time using the atoms that were selected above.
+
+```{r}
+actin_fit_rmsf = fit.xyz(fit_thing[1,], fit_thing, actin_rmsf_sel$xyz, actin_rmsf_sel$xyz)
+```
+
+#### (15) Now, perform principal component analysis (PCA) using the newly fitted trajectory.
+
+Principal component analysis will pull out the core movements of the protein.
+
+```{r}
+actin_pca = pca.xyz(actin_fit_rmsf[,actin_rmsf_sel$xyz])
+```
+
+#### (16) Plot your PCA. Make plots for PC1-PC2, PC2-PC3 and PC3-PC4.
+
+I have included some code for PC1-PC2.
+
+```{r}
+pc1pc2 = kde2d(actin_pca$z[,1], actin_pca$z[,2])
+filled.contour(pc1pc2, color.palette = mono.colors,
+               xlab = "PC1", ylab = "PC2")
+```
+
+#### (17) The contour plots created above are useful but don't tell us much about *what* the motions are. Trim the PDB file down to the atoms selected in part 13 using the `trim` function.
+
+```{r}
+actin_rmsf_pdb = trim(pdb, actin_rmsf_sel)
+```
+
+#### (18) Use the `mktrj.pca` function with the pca object created in part 15 and the pdb created in part 17 to write out trajectories for PC modes 1 to 4. Open these, individually, in RCSB.org's molecule viewer.
+
+If you have a hard time seeing the motions, you can use the `mag` flag to enhance the view of the motions.
+
+```{r}
+mktrj.pca(actin_pca, pc = 1, mag = 3, pdb = actin_rmsf_pdb, file = "actin_pc1.pdb", rock = FALSE)
+
+```

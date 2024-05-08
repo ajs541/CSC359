@@ -8,6 +8,7 @@ output: html_document
 The purpose of this assignment is to evaluate the structural similarity between human HBB and Cytoglobin. As this assignment is both longer and harder than others we have done in the course I am breaking it into two parts. The first part is due Monday and the second part will be due Tuesday Morning.
 
 ### Homework 5:
+
 Submit your R code for this assignment as well.
 
 #### (1) Load your HBB and Cytoglobin proteins you choose in Homework 4 into R. What chain from the PDB files are associated with your proteins?
@@ -20,7 +21,7 @@ Submit your R code for this assignment as well.
 
 In this case I am using the term **optimal alignment** to refer to a scoring scheme that leads to the highest sequence identity between the two proteins.
 
-*Note: Making your match scores very high will inflate your score. We want to compare identity here.* 
+*Note: Making your match scores very high will inflate your score. We want to compare identity here.*
 
 ```{r}
 
@@ -44,6 +45,6 @@ In this case I am using the term **optimal alignment** to refer to a scoring sch
 
 ```
 
-#### (6) Load both structures into PDB's molecule viewer and generate an image. Comment on the (dis)similarity between the two structures. Include that image with your homework submission. 
+#### (6) Load both structures into PDB's molecule viewer and generate an image. Comment on the (dis)similarity between the two structures. Include that image with your homework submission.
 
 #### (7) Write a short paragraph summarizing what you learned over the last two homeworks.

@@ -267,3 +267,29 @@ def medianString(dna, k):
             median = pattern
     return median
 
+def countPseudo(dna):
+    return count(dna)+1
+
+def profilePseudo(dna):
+    return count(dna)*(1/8)
+
+def consensus(seqList):
+    pro = profilePseudo(seqList)
+    l = len(pro)
+    final = ""
+    for i in range(l):
+        posMax = 0
+        pos = ""
+        for j in range(4):
+            if pro[j,i] > posMax:
+                posMax = pro[j,i]
+                if j==0:
+                    pos="A"
+                elif j==1:
+                    pos="C"
+                elif j==2:
+                    pos="G"
+                elif j==3:
+                    pos="T"
+        final+=pos
+    return final
